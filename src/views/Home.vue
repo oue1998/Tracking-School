@@ -1,18 +1,40 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-row>
+    <v-col
+      cols="12"
+      sm="6"
+    >
+      <v-date-picker
+        v-model="dates"
+        range
+      ></v-date-picker>
+    </v-col>
+    <v-col
+      cols="12"
+      sm="6"
+    >
+      <v-text-field
+        v-model="dateRangeText"
+        label="Date range"
+        prepend-icon="mdi-calendar"
+        readonly
+      ></v-text-field>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 
-export default {
-  name: 'Home',
-  components: {
-    HelloWorld
+
+  export default {
+    name: 'Home',
+    data: () => ({
+      dates: ['2019-09-10', '2019-09-20'],
+    }),
+    computed: {
+      dateRangeText () {
+        return this.dates.join(' ~ ')
+      },
+    },
   }
-}
 </script>
