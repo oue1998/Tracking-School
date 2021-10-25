@@ -27,7 +27,7 @@
 
 
   export default {
-    name: 'Home',
+    name: 'date',
     data: () => ({
       dates: ['2019-09-10', '2019-09-20'],
     }),
