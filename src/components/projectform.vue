@@ -13,50 +13,59 @@
         <v-row>
           <v-col cols="12" sm="6" md="3">
               <h4>โรงเรียน</h4>
-              <v-text-field label="โรงเรียน" solo outlined v-model="name" disabled></v-text-field>
+              <v-banner color="press" class="mb-5">{{name}}</v-banner>
               <h4>ปีการศึกษา</h4>
                <v-select :items="items" label="ปีการศึกษา" outlined></v-select>
-               <v-text-field v-model="dateRangeText" label="ตั้งแต่ - ถึง" prepend-icon="mdi-calendar" readonly></v-text-field>
-                <v-date-picker v-model="dates" range></v-date-picker>
-              <v-text-field label="รวม" solo outlined v-model="day" disabled></v-text-field>
+              <v-menu
+              ref="menu"
+              v-model="menu"
+              :close-on-content-click="false"
+              :return-value.sync="date"
+              transition="scale-transition"
+              offset-y
+              min-width="auto"
+            >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="dateRangeText"
+                    label="ตั่งแต่-ถึง"
+                    prepend-icon="mdi-calendar"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  v-model="date"
+                  
+                  scrollable
+                  range
+                >
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    text
+                    color="primary"
+                    @click="menu = false"
+                  >
+                    Cancel
+                  </v-btn>
+                  <v-btn
+                    text
+                    color="primary"
+                    @click="$refs.menu.save(date)"
+                  >
+                    OK
+                  </v-btn>
+                </v-date-picker>
+              </v-menu>
+              <v-banner color="press" class="mb-5">{{day}}</v-banner>
               <h4>จำนวนนักเรียน</h4>
               <v-text-field label="จำนวนนักเรียน" solo outlined></v-text-field>
               <h4>เป็นงบประมาณ</h4>
-              <v-text-field label="บาท/คน" solo outlined></v-text-field>
+              <v-banner color="press" class="mb-5">20/คน</v-banner>
               <v-text-field label="รวม" solo outlined></v-text-field>
               <h4>วันที่บันทึก</h4>
-               <v-dialog ref="dialog" v-model="modal" :return-value.sync="date" persistent width="290px">
-        <template v-slot:activator="{ on, attrs }">
-          <v-text-field
-            v-model="date"
-            label="วันที่บันทึก"
-            prepend-icon="mdi-calendar"
-            readonly
-            v-bind="attrs"
-            v-on="on"
-          ></v-text-field>
-        </template>
-        <v-date-picker
-          v-model="date"
-          scrollable
-        >
-          <v-spacer></v-spacer>
-          <v-btn
-            text
-            color="primary"
-            @click="modal = false"
-          >
-            Cancel
-          </v-btn>
-          <v-btn
-            text
-            color="primary"
-            @click="$refs.dialog.save(date)"
-          >
-            OK
-          </v-btn>
-        </v-date-picker>
-      </v-dialog>
+              <v-banner color="press" class="mb-5">27/10/2021</v-banner>
           </v-col>
           <v-row justify="center">
             <v-col cols="4">
@@ -81,12 +90,13 @@ data: () => ({
     budget: 0,
     have: 0,
     items: ['2563', '2564', '2565', '2566'],
-    dates: ['2021-10-10', '2021-10-20'],
-    modal: false,
+    date: [],
+    menu: false,
+    today: new Date(),
   }),
   computed: {
       dateRangeText () {
-        return this.dates.join(' ~ ')
+        return this.date.join(' - ')
       },
     },
 

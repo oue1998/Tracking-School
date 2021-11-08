@@ -1,7 +1,7 @@
 <template>
-  <div id="budget">
+  <div id="confirmBG-DEPT">
       <v-toolbar color="primary" dark height="120">
-      <v-btn icon @click="$router.push('/school')" class="mt-2"> <v-icon size="60">mdi-chevron-left</v-icon> </v-btn>
+      <v-btn icon @click="$router.push('/home-DEPT')" class="mt-2"> <v-icon size="60">mdi-chevron-left</v-icon> </v-btn>
       <v-spacer></v-spacer>
       <v-toolbar-title class="text-center"><h2>{{ name }} <br>รายการงบฯที่ได้รับ</h2></v-toolbar-title>
       <v-spacer></v-spacer>
@@ -19,15 +19,10 @@
 <script>
 
 export default {
-name:'budget',
+name:'confirmBG-DEPT',
 component:{},
 data: () => ({
-    name: "โรงเรียน จ จาน",
-    year: "2564",
-    student: 100,
-    day: 200,
-    budget: 0,
-    have: 0,
+    name: "กรมส่งเสริมการปกครองท้องถิ่น",
     dialog: false
   }),
 
