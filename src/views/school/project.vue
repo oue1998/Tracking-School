@@ -1,11 +1,6 @@
 <template>
   <div id="project">
-      <v-toolbar color="primary" dark height="120">
-      <v-btn icon @click="$router.push('/school')" class="mt-2"> <v-icon size="60">mdi-chevron-left</v-icon> </v-btn>
-      <v-spacer></v-spacer>
-      <v-toolbar-title class="text-center"><h2>{{ name }} <br>บันทึกโครงการที่ขอไป</h2></v-toolbar-title>
-      <v-spacer></v-spacer>
-      </v-toolbar>
+       <headbar :datahead="datahead"/>
       <v-container>
         <v-row class="text-center mt-3">
           <v-col cols="12">
@@ -18,21 +13,61 @@
             <h3>เพิ่มรายการ</h3>
             </v-btn>
         </v-row>
+        <v-row>
+          <v-col cols="12">
+          <v-card class="mx-auto ma-5 pa-5" max-width="344" v-for="dataPro in dataPro" :key="dataPro.id">
+            <v-row>
+            <v-col>
+            <div class="text-h6 black--text"> ปีการศึกษา : {{dataPro.academicYear}} </div>
+            <div class="text-h6 black--text"> โรงเรียน : {{dataPro.school.schoolName}} </div>
+            <div class="text-h6 black--text"> จำนวนนักเรียน : {{dataPro.numberOfStudent}} คน </div>
+            <div class="text-h6 black--text"> จำนวนวัน : {{dataPro.totalDays}} วัน </div>
+            <div class="text-h6 black--text"> เป็นงบประมาณ : {{dataPro.budgetAmount}} </div>
+            <div class="text-h6 black--text"> วันที่บันทึก : {{dayTH(dataPro.recordedDate)}} </div>
+            </v-col>
+            </v-row>
+          </v-card>
+          </v-col>
+        </v-row>
       </v-container>
   </div>
 </template>
 
 <script>
+import headbar from '@/components/headbar.vue'
+import axios from 'axios'
 export default {
 name:'project',
+components:{headbar},
 data: () => ({
-    name: "โรงเรียน จ จาน",
+    name: '',
     year: "2564",
-    student: 100,
-    day: 200,
-    budget: 0,
-    have: 0,
+    dataPro:[],
+    datahead:{
+      url: '/school',
+      title:'บันทึกโครงการที่ขอ'
+    },
   }),
+  mounted () {
+     this.showPro()
+  
+    },
+    computed: {
+      reverseddataPro(){
+        return this.dataPro.slice().reverse()
+      },
+    },
+  methods:{
+      async showPro(){
+        let resp = await axios.get('/school-budget-requested')
+        this.dataPro = resp.data
+      },
+       dayTH(value){
+        let a = new Date(value)
+        this.day = a.toLocaleDateString("th-TH", { timeZone: "UTC" })
+        return this.day
+      }
+}
 }
 </script>
 

@@ -1,11 +1,6 @@
 <template>
   <div id="appeal-LC">
-      <v-toolbar color="primary" dark height="120">
-      <v-btn icon @click="$router.push('/home-LC')" class="mt-2"> <v-icon size="60">mdi-chevron-left</v-icon> </v-btn>
-      <v-spacer></v-spacer>
-      <v-toolbar-title class="text-center"><h2>{{ name }} <br>รายการร้องเรียนที่ได้รับ</h2></v-toolbar-title>
-      <v-spacer></v-spacer>
-      </v-toolbar>
+      <headbar :datahead="datahead"/>
       <v-container>
         <v-row class="text-center">
           <v-col cols="12" class="mt-5">
@@ -17,13 +12,15 @@
 </template>
 
 <script>
-
+import headbar from '@/components/headbar.vue'
 export default {
 name:'appeal-LC',
-component:{},
+components:{headbar},
 data: () => ({
-    name: "อปท. กำแพงเพชร",
-    dialog: false
+    datahead:{
+      url: '//home-LC',
+      title:'รายการร้องเรียนที่ได้รับ'
+    },
   }),
 
 }

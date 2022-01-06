@@ -7,8 +7,13 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: () => import('../views/home.vue')
+    name: 'login',
+    component: () => import('../views/login.vue')
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('../views/login.vue')
   },
   {
     path: '/school',
@@ -66,12 +71,12 @@ const routes = [
     component: () => import('../views/dept/appeal-DEPT.vue')
   },
   {
-    path: '/budget-DEPT',
+    path: '/budget-DEPT/:id',
     name: 'budget-DEPT',
     component: () => import('../views/dept/budget-DEPT.vue')
   },
   {
-    path: '/budgetform-DEPT',
+    path: '/budgetform-DEPT/:id/:name',
     name: 'budgetform-DEPT',
     component: () => import('../views/dept/budgetform-DEPT.vue')
   },
@@ -96,12 +101,12 @@ const routes = [
     component: () => import('../views/local/appeal-LC.vue')
   },
   {
-    path: '/budget-LC',
+    path: '/budget-LC/:id/:name',
     name: 'budget-LC',
     component: () => import('../views/local/budget-LC.vue')
   },
   {
-    path: '/budgetform-LC',
+    path: '/budgetform-LC/:id',
     name: 'budgetform-LC',
     component: () => import('../views/local/budgetform-LC.vue')
   },

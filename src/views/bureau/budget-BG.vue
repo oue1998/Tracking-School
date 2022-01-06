@@ -18,25 +18,58 @@
             <h3>เพิ่มรายการ</h3>
             </v-btn>
         </v-row>
+         <v-row>
+          <v-col cols="12">
+            <v-card class="mx-auto ma-5 pa-5" max-width="344" v-for="data in data" :key="data.transactionDate">
+              <v-row>
+              <v-col cols="12">
+              <div class="text-h6 black--text text-right"> ส่งเมื่อวันที่ : {{dayTH(data.submissionDate)}} </div>
+              <v-divider/>
+              <div class="text-h6 black--text "> ปีการศึกษา : {{data.academicYear}} </div>
+              <div class="text-h6 black--text"> งบประมาณทั้งสิ้น : {{data.allocatedBudgetAmount}} </div>
+              <div class="text-h6 black--text"> จำนวนวัน : {{data.totalDays}} </div>
+              <div class="text-h6 black--text"> วันที่บันทึก : {{dayTH(data.submissionDate)}} </div>
+              </v-col>
+              </v-row>
+            </v-card>
+          </v-col>
+        </v-row>
       </v-container>
   </div>
 </template>
 
 <script>
-
+import axios from 'axios'
 export default {
 name:'budget-BG',
 component:{},
 data: () => ({
     name: "สำนักงบประมาณ",
     year: "2564",
-    student: 100,
-    day: 200,
-    budget: 0,
-    have: 0,
-    dialog: false
+    dialog: false,
+    data:[],
+    today:(new Date()).toLocaleDateString("th-TH", { timeZone: "UTC" })
   }),
-
+  mounted () {
+      this.showdata()
+  
+    },
+    computed: {
+      // reverseddataPro(){
+      //   return this.data.slice().reverse()
+      // },
+    },
+  methods:{
+      async showdata(){
+        let resp = await axios.get(`bob-dla-transaction?academicYear=${this.year}`)
+        this.data = resp.data.slice().reverse()
+        console.log('this.data',this.data)
+      },
+      dayTH(value){
+        let day = (new Date(value)).toLocaleDateString("th-TH", { timeZone: "UTC" })
+        return day
+      },
+}
 }
 </script>
 
